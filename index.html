@@ -7,12 +7,14 @@
 <title>Happy New Year</title>
 
 <style>
+/* ---------- RESET ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ---------- BODY ---------- */
 body {
   min-height: 100vh;
   background: black;
@@ -25,17 +27,30 @@ body {
   color: white;
 }
 
+/* ---------- CANVAS ---------- */
 canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
+/* ---------- CONTENT ---------- */
 .container {
   width: 100%;
   max-width: 560px;
   padding: 28px;
   text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 🔥 TRUE CENTER FIX */
+}
+
+/* ---------- TITLE ---------- */
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 h1 {
@@ -43,9 +58,14 @@ h1 {
   font-weight: 500;
   letter-spacing: 0.4px;
   white-space: nowrap;
+
+  display: inline-block;   /* 🔥 FIX */
+  margin: 0 auto;          /* 🔥 FIX */
+
   animation: textGlow 3s ease-in-out infinite;
 }
 
+/* ---------- WISHES ---------- */
 .wishes {
   margin-top: 22px;
 }
@@ -64,6 +84,7 @@ h1 {
 .wishes p:nth-child(4) { animation-delay: 2s; }
 .wishes p:nth-child(5) { animation-delay: 2.5s; }
 
+/* ---------- ANIMATIONS ---------- */
 @keyframes textGlow {
   0% {
     opacity: 0.7;
@@ -97,7 +118,9 @@ h1 {
 <canvas id="sky"></canvas>
 
 <div class="container">
-  <h1>💫⭐Happy New Year 2026⭐💫</h1>
+  <div class="title">
+    <h1>Happy New Year 2026 ✨</h1>
+  </div>
 
   <div class="wishes">
     <p>May this year bring peace to your heart 🌿</p>
@@ -109,6 +132,7 @@ h1 {
 </div>
 
 <script>
+/* ---------- CANVAS SETUP (RETINA SAFE) ---------- */
 const canvas = document.getElementById("sky");
 const ctx = canvas.getContext("2d");
 let dpr = window.devicePixelRatio || 1;
@@ -163,6 +187,7 @@ setInterval(createShootingStar, 4200);
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // blinking stars
   for (const s of stars) {
     s.a += Math.random() * 0.025 - 0.012;
     s.a = Math.max(0.25, Math.min(1, s.a));
@@ -174,6 +199,7 @@ function animate() {
     ctx.fill();
   }
 
+  // shooting stars
   ctx.globalAlpha = 1;
   shootingStars.forEach((st, i) => {
     ctx.strokeStyle = "rgba(255,255,255,0.85)";
